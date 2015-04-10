@@ -33,6 +33,8 @@ facing = "down";
 sprite_index = spr_hero_down;
 image_speed = 0.1;
 draw_set_font(font0);
+
+map = buffer_create(1, buffer_grow,1);
 </string>
           </argument>
         </arguments>
