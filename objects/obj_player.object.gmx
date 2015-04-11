@@ -33,8 +33,6 @@ facing = "down";
 sprite_index = spr_hero_down;
 image_speed = 0.1;
 draw_set_font(font0);
-
-map = buffer_create(1, buffer_grow,1);
 </string>
           </argument>
         </arguments>
@@ -62,7 +60,7 @@ if(target_x &lt; x) { x -= 4; }
 if(target_y &gt; y) { y += 4; }
 if(target_y &lt; y) { y -= 4; }
 
-if(target_x == x &amp;&amp; target_y == y) { moving = false;}
+if(target_x == x &amp;&amp; target_y == y) { moving = false; image_speed=0;}
 
 if(keyboard_check(vk_left) &amp;&amp; !moving &amp;&amp; place_free(x - 8, y)){
   moving = true;
@@ -72,6 +70,7 @@ if(keyboard_check(vk_left) &amp;&amp; !moving &amp;&amp; place_free(x - 8, y)){
   buffer_write(movePacket, buffer_string, "move");
   buffer_write(movePacket, buffer_string, "left");
   network_write(Network.socket, movePacket);
+  image_speed=0.2;
 }
 if(keyboard_check(vk_right) &amp;&amp; !moving &amp;&amp; place_free(x + 8, y)){
   moving = true;
@@ -81,6 +80,7 @@ if(keyboard_check(vk_right) &amp;&amp; !moving &amp;&amp; place_free(x + 8, y)){
   buffer_write(movePacket, buffer_string, "move");
   buffer_write(movePacket, buffer_string, "right");
   network_write(Network.socket, movePacket);
+  image_speed=0.2;
 }
 if(keyboard_check(vk_up) &amp;&amp; !moving &amp;&amp; place_free(x, y - 8)){
   moving = true;
@@ -90,6 +90,7 @@ if(keyboard_check(vk_up) &amp;&amp; !moving &amp;&amp; place_free(x, y - 8)){
   buffer_write(movePacket, buffer_string, "move");
   buffer_write(movePacket, buffer_string, "up");
   network_write(Network.socket, movePacket);
+  image_speed=0.2;
 }
 if(keyboard_check(vk_down) &amp;&amp; !moving &amp;&amp; !moving &amp;&amp; place_free(x, y + 8)){
   moving = true;
@@ -99,6 +100,7 @@ if(keyboard_check(vk_down) &amp;&amp; !moving &amp;&amp; !moving &amp;&amp; plac
   buffer_write(movePacket, buffer_string, "move");
   buffer_write(movePacket, buffer_string, "down");
   network_write(Network.socket, movePacket);
+  image_speed=0.2;
 }
 </string>
           </argument>
