@@ -66,8 +66,8 @@
     <rooms name="Maps">
       <room>rooms\rm_map_home2</room>
       <room>rooms\rm_map_test</room>
+      <room>rooms\rm_map_home3</room>
       <room>rooms\rm_map_home</room>
-      <room>rooms\rm_map_home4</room>
     </rooms>
   </rooms>
   <help>

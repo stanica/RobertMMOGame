@@ -33,6 +33,42 @@ facing = "down";
 sprite_index = spr_hero_down;
 image_speed = 0.1;
 draw_set_font(font0);
+date_set_timezone(timezone_utc);
+alarm[0] = 1;
+timeOffset = 0;
+ping = 0;
+
+//var file;
+//file = file_text_open_append("map.txt");
+//file_text_write_string(file, "vals[" + string(y/8) + "][" + string(x/8)+"]=1;");
+//file_text_close(file);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>var ping_packet = buffer_create(1, buffer_grow, 1);
+buffer_write(ping_packet, buffer_string, "ping");
+buffer_write(ping_packet, buffer_u32, current_time);
+network_write(Network.socket, ping_packet);
+alarm[0] = room_speed * 5;
 </string>
           </argument>
         </arguments>
@@ -156,6 +192,7 @@ network_write(Network.socket, pos_packet);
             <kind>1</kind>
             <string>draw_self();
 draw_text(x - (string_width(name) / 2), y - 26, name);
+draw_text(view_xview[0],view_yview[0], ping);
 </string>
           </argument>
         </arguments>

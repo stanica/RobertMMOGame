@@ -7,6 +7,15 @@ switch(command){
     server_time = buffer_read(argument0, buffer_string);
     room_goto_next();
     show_debug_message("Server welcomes you @ " + server_time);
+    //var time_packet = buffer_create(1, buffer_grow, 1);
+    //Network.curTime = current_time;
+    //buffer_write(time_packet, buffer_string, "time");
+    //network_write(Network.socket, time_packet);
+    break;
+  
+  case "TIME":
+    server_time = buffer_read(argument0, buffer_u32);
+    Network.timeOffset = server_time - Network.curTime;  
     break;
     
   case "LOGIN":
@@ -16,7 +25,6 @@ switch(command){
       target_x = buffer_read(argument0, buffer_u16);
       target_y = buffer_read(argument0, buffer_u16);
       name = buffer_read(argument0, buffer_string);
-      
       goto_room = asset_get_index(target_room);
       room_goto(goto_room);
       with(instance_create(target_x, target_y, obj_player)){
@@ -79,5 +87,11 @@ switch(command){
           break;
       }
     }
+    break;
+  
+  case "PONG":
+    old_time = buffer_read(argument0, buffer_u32);
+    //server_time = buffer_read(argument0, buffer_u32);
+    obj_player.ping = floor(current_time - old_time);
     break;
 }
