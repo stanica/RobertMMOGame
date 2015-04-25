@@ -7,10 +7,6 @@ switch(command){
     server_time = buffer_read(argument0, buffer_string);
     room_goto_next();
     show_debug_message("Server welcomes you @ " + server_time);
-    //var time_packet = buffer_create(1, buffer_grow, 1);
-    //Network.curTime = current_time;
-    //buffer_write(time_packet, buffer_string, "time");
-    //network_write(Network.socket, time_packet);
     break;
   
   case "TIME":
@@ -94,4 +90,13 @@ switch(command){
     //server_time = buffer_read(argument0, buffer_u32);
     obj_player.ping = floor(current_time - old_time);
     break;
+  
+  case "LOGOUT":
+    user = buffer_read(argument0, buffer_string);
+    with(obj_network_player){
+        if(name == other.user){
+            instance_destroy();
+        }
+    }
+    break
 }

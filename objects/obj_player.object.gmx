@@ -138,6 +138,11 @@ if(keyboard_check(vk_down) &amp;&amp; !moving &amp;&amp; !moving &amp;&amp; plac
   network_write(Network.socket, movePacket);
   image_speed=0.2;
 }
+
+if(keyboard_check(vk_enter)){
+  
+  show_debug_message("Enter pressed");
+}
 </string>
           </argument>
         </arguments>
