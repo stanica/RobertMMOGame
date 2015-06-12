@@ -55,7 +55,6 @@
     <instance objName="txt_password" x="208" y="224" name="inst_4D0F86FE" locked="0" code="" scaleX="14" scaleY="2" colour="4294967295" rotation="0"/>
     <instance objName="btn_login" x="208" y="272" name="inst_B41E8594" locked="0" code="" scaleX="6" scaleY="2" colour="4294967295" rotation="0"/>
     <instance objName="btn_register" x="336" y="272" name="inst_8EAC615D" locked="0" code="" scaleX="6" scaleY="2" colour="4294967295" rotation="0"/>
-    <instance objName="ui_chatbox" x="16" y="112" name="inst_461A46B4" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>

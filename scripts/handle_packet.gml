@@ -99,4 +99,42 @@ switch(command){
         }
     }
     break
+    
+  case "CHAT":
+    type = buffer_read(argument0, buffer_string);
+    message = buffer_read(argument0, buffer_string);
+    user = buffer_read(argument0, buffer_string);
+    show_debug_message(message);
+    with(obj_network_player){
+      if(name == other.user){
+        text = other.message;
+        if(chatID > 0) {
+          with(chatID){
+            instance_destroy();
+          }
+        }
+        with(instance_create(other.x - 24, other.y - 44, ui_chatbox)){
+          message = other.text;
+          playerID = other.id;
+          other.chatID = id;
+          line = 0;
+        }
+      }
+    }
+    if(user == obj_player.name) {
+      if(obj_player.chatID > 0){
+        with(obj_player.chatID){
+          instance_destroy();
+        }
+      }
+      with(instance_create(obj_player.x - 24, obj_player.y - 44, ui_chatbox)){
+          message = other.message;
+          playerID = obj_player.id;
+          obj_player.chatID = id;
+          count = 0;
+          line = 0;
+          displayed = false;
+        }
+    }
+    break
 }

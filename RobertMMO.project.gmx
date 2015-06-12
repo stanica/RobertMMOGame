@@ -10,6 +10,7 @@
       <sprite>sprites\spr_chat_up</sprite>
       <sprite>sprites\spr_chat_down</sprite>
       <sprite>sprites\spr_ui_base</sprite>
+      <sprite>sprites\spr_chat</sprite>
     </sprites>
     <sprites name="Players">
       <sprite>sprites\spr_hero_down</sprite>
@@ -35,6 +36,7 @@
   </scripts>
   <fonts name="fonts">
     <font>fonts\font0</font>
+    <font>fonts\chatBox</font>
   </fonts>
   <objects name="objects">
     <objects name="Sockets">
@@ -48,6 +50,8 @@
       <object>objects\ui_chatbox</object>
       <object>objects\obj_chat_up</object>
       <object>objects\obj_chat_down</object>
+      <object>objects\obj_chat_background</object>
+      <object>objects\obj_chat_text</object>
     </objects>
     <objects name="Room Specific">
       <objects name="Login">

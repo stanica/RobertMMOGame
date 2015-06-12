@@ -37,6 +37,9 @@ date_set_timezone(timezone_utc);
 alarm[0] = 1;
 timeOffset = 0;
 ping = 0;
+visible_chat = false;
+canMove = true;
+chatID = -1;
 
 //var file;
 //file = file_text_open_append("map.txt");
@@ -98,6 +101,7 @@ if(target_y &lt; y) { y -= 4; }
 
 if(target_x == x &amp;&amp; target_y == y) { moving = false; image_speed=0;}
 
+if(canMove){
 if(keyboard_check(vk_left) &amp;&amp; !moving &amp;&amp; place_free(x - 8, y)){
   moving = true;
   facing = "left";
@@ -108,7 +112,7 @@ if(keyboard_check(vk_left) &amp;&amp; !moving &amp;&amp; place_free(x - 8, y)){
   network_write(Network.socket, movePacket);
   image_speed=0.2;
 }
-if(keyboard_check(vk_right) &amp;&amp; !moving &amp;&amp; place_free(x + 8, y)){
+else if(keyboard_check(vk_right) &amp;&amp; !moving &amp;&amp; place_free(x + 8, y)){
   moving = true;
   facing = "right";
   sprite_index = spr_hero_right;
@@ -118,7 +122,7 @@ if(keyboard_check(vk_right) &amp;&amp; !moving &amp;&amp; place_free(x + 8, y)){
   network_write(Network.socket, movePacket);
   image_speed=0.2;
 }
-if(keyboard_check(vk_up) &amp;&amp; !moving &amp;&amp; place_free(x, y - 8)){
+else if(keyboard_check(vk_up) &amp;&amp; !moving &amp;&amp; place_free(x, y - 8)){
   moving = true;
   facing = "up";
   sprite_index = spr_hero_up;
@@ -128,7 +132,7 @@ if(keyboard_check(vk_up) &amp;&amp; !moving &amp;&amp; place_free(x, y - 8)){
   network_write(Network.socket, movePacket);
   image_speed=0.2;
 }
-if(keyboard_check(vk_down) &amp;&amp; !moving &amp;&amp; !moving &amp;&amp; place_free(x, y + 8)){
+else if(keyboard_check(vk_down) &amp;&amp; !moving &amp;&amp; !moving &amp;&amp; place_free(x, y + 8)){
   moving = true;
   facing = "down";
   sprite_index = spr_hero_down;
@@ -138,10 +142,33 @@ if(keyboard_check(vk_down) &amp;&amp; !moving &amp;&amp; !moving &amp;&amp; plac
   network_write(Network.socket, movePacket);
   image_speed=0.2;
 }
+}
 
-if(keyboard_check(vk_enter)){
-  
-  show_debug_message("Enter pressed");
+if(keyboard_check_released(vk_enter)){
+  if(instance_exists(obj_chat_background) &amp;&amp; instance_exists(obj_chat_text)){
+    canMove = true;
+    text = obj_chat_text.text;
+    text = string_copy(text, 3, string_length(text));
+    if(string_length(text) &gt; 0){
+      var chatPacket = buffer_create(1, buffer_grow, 1);
+      buffer_write(chatPacket, buffer_string, "chatmsg");
+      buffer_write(chatPacket, buffer_string, "all");
+      buffer_write(chatPacket, buffer_string, text);
+      buffer_write(chatPacket, buffer_string, name);
+      network_write(Network.socket, chatPacket);
+    }
+    with(obj_chat_background){
+      instance_destroy();
+    }
+    with(obj_chat_text){
+      instance_destroy();
+    }
+  }
+  else {
+    canMove = false;
+    instance_create(view_xview[0], view_yview[0] + view_hview[0]-16, obj_chat_background)
+    instance_create(view_xview[0], view_yview[0] + view_hview[0]-16, obj_chat_text)
+  }
 }
 </string>
           </argument>
@@ -195,9 +222,10 @@ network_write(Network.socket, pos_packet);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_self();
-draw_text(x - (string_width(name) / 2), y - 26, name);
+            <string>draw_set_color(c_black);
 draw_text(view_xview[0],view_yview[0], ping);
+//draw_text(x - (string_width(name) / 2), y - 26, name);
+draw_self();
 </string>
           </argument>
         </arguments>
