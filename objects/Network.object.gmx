@@ -36,7 +36,7 @@ timeOffset = 0;
 
 //initiate the socket
 socket = network_create_socket(network_socket_tcp);
-//network_connect_raw(socket, "167.88.45.104", 8082);
+//network_connect_raw(socket, "168.235.144.28", 8082);
 network_connect_raw(socket, "127.0.0.1", 8082);
 </string>
           </argument>
