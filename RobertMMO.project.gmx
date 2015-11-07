@@ -68,6 +68,9 @@
     <objects name="System">
       <object>objects\obj_blocked</object>
     </objects>
+    <objects name="Data">
+      <object>objects\obj_movement</object>
+    </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_init</room>
@@ -75,8 +78,8 @@
     <rooms name="Maps">
       <room>rooms\rm_map_home2</room>
       <room>rooms\rm_map_test</room>
-      <room>rooms\rm_map_home3</room>
       <room>rooms\rm_map_home</room>
+      <room>rooms\rm_map_home3</room>
     </rooms>
   </rooms>
   <help>

@@ -41,10 +41,36 @@ visible_chat = false;
 canMove = true;
 chatID = -1;
 
+inputs = ds_list_create();
+inputID = -1;
+
 //var file;
 //file = file_text_open_append("map.txt");
 //file_text_write_string(file, "vals[" + string(y/8) + "][" + string(x/8)+"]=1;");
 //file_text_close(file);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="1" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>ds_list_destroy(inputs);
 </string>
           </argument>
         </arguments>
@@ -102,46 +128,99 @@ if(target_y &lt; y) { y -= 4; }
 if(target_x == x &amp;&amp; target_y == y) { moving = false; image_speed=0;}
 
 if(canMove){
-if(keyboard_check(vk_left) &amp;&amp; !moving &amp;&amp; place_free(x - 8, y)){
-  moving = true;
-  facing = "left";
-  sprite_index = spr_hero_left;
-  var movePacket = buffer_create(1, buffer_grow, 1);
-  buffer_write(movePacket, buffer_string, "move");
-  buffer_write(movePacket, buffer_string, "left");
-  network_write(Network.socket, movePacket);
-  image_speed=0.2;
-}
-else if(keyboard_check(vk_right) &amp;&amp; !moving &amp;&amp; place_free(x + 8, y)){
-  moving = true;
-  facing = "right";
-  sprite_index = spr_hero_right;
-  var movePacket = buffer_create(1, buffer_grow, 1);
-  buffer_write(movePacket, buffer_string, "move");
-  buffer_write(movePacket, buffer_string, "right");
-  network_write(Network.socket, movePacket);
-  image_speed=0.2;
-}
-else if(keyboard_check(vk_up) &amp;&amp; !moving &amp;&amp; place_free(x, y - 8)){
-  moving = true;
-  facing = "up";
-  sprite_index = spr_hero_up;
-  var movePacket = buffer_create(1, buffer_grow, 1);
-  buffer_write(movePacket, buffer_string, "move");
-  buffer_write(movePacket, buffer_string, "up");
-  network_write(Network.socket, movePacket);
-  image_speed=0.2;
-}
-else if(keyboard_check(vk_down) &amp;&amp; !moving &amp;&amp; !moving &amp;&amp; place_free(x, y + 8)){
-  moving = true;
-  facing = "down";
-  sprite_index = spr_hero_down;
-  var movePacket = buffer_create(1, buffer_grow, 1);
-  buffer_write(movePacket, buffer_string, "move");
-  buffer_write(movePacket, buffer_string, "down");
-  network_write(Network.socket, movePacket);
-  image_speed=0.2;
-}
+    if(keyboard_check(vk_left) &amp;&amp; !moving &amp;&amp; place_free(x - 8, y)){
+      input = instance_create(0,0,obj_movement);
+      with(input){
+        x = other.x - 8;
+        y = other.y;
+        inputID = ++other.inputID;
+      }
+      ds_list_add(inputs, input);
+      moving = true;
+      facing = "left";
+      sprite_index = spr_hero_left;
+      var movePacket = buffer_create(1, buffer_grow, 1);
+      buffer_write(movePacket, buffer_string, "move");
+      buffer_write(movePacket, buffer_string, "left");
+      buffer_write(movePacket, buffer_string, string(inputID));
+      network_write(Network.socket, movePacket);
+      target_x = x - 8;
+      show_debug_message("sent message #" + string(input.inputID) + " with x: " + string(target_x));
+    }
+    else if(keyboard_check(vk_right) &amp;&amp; !moving &amp;&amp; place_free(x + 8, y)){
+      input = instance_create(0,0,obj_movement);
+      with(input){
+        x = other.x + 8;
+        y = other.y;
+        inputID = ++other.inputID;
+      }
+      ds_list_add(inputs, input);
+      moving = true;
+      facing = "right";
+      sprite_index = spr_hero_right;
+      var movePacket = buffer_create(1, buffer_grow, 1);
+      buffer_write(movePacket, buffer_string, "move");
+      buffer_write(movePacket, buffer_string, "right");
+      buffer_write(movePacket, buffer_string, string(inputID));
+      network_write(Network.socket, movePacket);
+      target_x = x + 8;
+      show_debug_message("sent message #" + string(input.inputID) + " with x: " + string(target_x))
+    }
+    else if(keyboard_check(vk_up) &amp;&amp; !moving &amp;&amp; place_free(x, y - 8)){
+      input = instance_create(0,0,obj_movement);
+      with(input){
+        x = other.x;
+        y = other.y - 8;
+        inputID = ++other.inputID;
+      }
+      ds_list_add(inputs, input);
+      moving = true;
+      facing = "up";
+      sprite_index = spr_hero_up;
+      var movePacket = buffer_create(1, buffer_grow, 1);
+      buffer_write(movePacket, buffer_string, "move");
+      buffer_write(movePacket, buffer_string, "up");
+      buffer_write(movePacket, buffer_string, string(inputID));
+      network_write(Network.socket, movePacket);
+      target_y = y - 8;
+      show_debug_message("sent message #" + string(input.inputID) + " with y: " + string(target_y))
+    }
+    else if(keyboard_check(vk_down) &amp;&amp; !moving &amp;&amp; !moving &amp;&amp; place_free(x, y + 8)){
+      input = instance_create(0,0,obj_movement);
+      with(input){
+        x = other.x;
+        y = other.y + 8;
+        inputID = ++other.inputID;
+      }
+      ds_list_add(inputs, input);
+      moving = true;
+      facing = "down";
+      sprite_index = spr_hero_down;
+      var movePacket = buffer_create(1, buffer_grow, 1);
+      buffer_write(movePacket, buffer_string, "move");
+      buffer_write(movePacket, buffer_string, "down");
+      buffer_write(movePacket, buffer_string, string(inputID));
+      network_write(Network.socket, movePacket);
+      target_y = y + 8;
+      show_debug_message("sent message #" + string(input.inputID) + " with y: " + string(target_y))
+    }
+    else if(keyboard_check(vk_left)){
+      facing = "left";
+       sprite_index = spr_hero_left;
+    }
+    else if(keyboard_check(vk_right)){
+      facing = "right";
+       sprite_index = spr_hero_right;
+    }
+    else if(keyboard_check(vk_up)){
+      facing = "up";
+       sprite_index = spr_hero_up;
+    }
+    else if(keyboard_check(vk_down)){
+      facing = "down";
+      sprite_index = spr_hero_down;
+    }
+    image_speed=0.2;
 }
 
 if(keyboard_check_released(vk_enter)){

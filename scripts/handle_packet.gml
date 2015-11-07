@@ -73,14 +73,54 @@ switch(command){
   case "USER_POS":
     dir = buffer_read(argument0, buffer_string);
     value = buffer_read(argument0, buffer_u16);
+    //Stores the last confirmed input message number by the server
+    var networkInput = buffer_read(argument0, buffer_string);
+    var updatedX = 0;
+    var updatedY = 0;
+    switch(dir){
+      case "HORIZ":
+        updatedX = value;
+        break;
+          
+      case "VERT":
+        updatedY = value;
+        break;
+      }
+    //Extract last confirmed coordinates from last confirmed input using last confirmed message number
+    for(var i=0; i<ds_list_size(obj_player.inputs); i++){
+      if(obj_player.inputs[| i].inputID == real(networkInput)){
+        with(obj_player.inputs[| i]){
+        show_debug_message("other x is:" + string(updatedX));
+          if(updatedX == 0){
+            updatedX = x;
+          }
+          else if(updatedY == 0)
+            updatedY = y;
+        }
+      }
+    }
     with(obj_player){
-      switch(other.dir){
-        case "HORIZ":
-          target_x = other.value;
-          break;
-        case "VERT":
-          target_y = other.value;
-          break;
+      //If the last confirmed coordinate doesn't match current player's coordinate, update player
+      target_x = updatedX;
+      target_y = updatedY;
+      
+      //Destroy input object matching confirmed message number and delete item from inputs array
+      for (var i=0; i<ds_list_size(inputs); i++){
+        if (inputs[| i].inputID == real(networkInput)){
+          with(inputs[| i]){
+            instance_destroy();
+          }
+          ds_list_delete(inputs, i);
+        }
+      }
+      
+      //Loop through inputs array and apply local coordinates to player
+      with(obj_player){
+      show_debug_message("inputs size is: " + string(ds_list_size(inputs)) + " x is: " + string(x) + " y is: " + string(y));
+        for(i = 0; i < ds_list_size(inputs); i++){
+          target_x = inputs[| i].x;
+          target_y = inputs[| i].y;
+        }
       }
     }
     break;
