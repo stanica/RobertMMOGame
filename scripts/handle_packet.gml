@@ -90,7 +90,6 @@ switch(command){
     for(var i=0; i<ds_list_size(obj_player.inputs); i++){
       if(obj_player.inputs[| i].inputID == real(networkInput)){
         with(obj_player.inputs[| i]){
-        show_debug_message("other x is:" + string(updatedX));
           if(updatedX == 0){
             updatedX = x;
           }

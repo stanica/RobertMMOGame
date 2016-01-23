@@ -40,6 +40,7 @@ ping = 0;
 visible_chat = false;
 canMove = true;
 chatID = -1;
+stepSpeed = 8;
 
 inputs = ds_list_create();
 inputID = -1;
@@ -131,7 +132,7 @@ if(canMove){
     if(keyboard_check(vk_left) &amp;&amp; !moving &amp;&amp; place_free(x - 8, y)){
       input = instance_create(0,0,obj_movement);
       with(input){
-        x = other.x - 8;
+        x = other.x - other.stepSpeed;
         y = other.y;
         inputID = ++other.inputID;
       }
@@ -144,13 +145,12 @@ if(canMove){
       buffer_write(movePacket, buffer_string, "left");
       buffer_write(movePacket, buffer_string, string(inputID));
       network_write(Network.socket, movePacket);
-      target_x = x - 8;
-      show_debug_message("sent message #" + string(input.inputID) + " with x: " + string(target_x));
+      target_x = x - stepSpeed;
     }
     else if(keyboard_check(vk_right) &amp;&amp; !moving &amp;&amp; place_free(x + 8, y)){
       input = instance_create(0,0,obj_movement);
       with(input){
-        x = other.x + 8;
+        x = other.x + other.stepSpeed;
         y = other.y;
         inputID = ++other.inputID;
       }
@@ -163,14 +163,13 @@ if(canMove){
       buffer_write(movePacket, buffer_string, "right");
       buffer_write(movePacket, buffer_string, string(inputID));
       network_write(Network.socket, movePacket);
-      target_x = x + 8;
-      show_debug_message("sent message #" + string(input.inputID) + " with x: " + string(target_x))
+      target_x = x + stepSpeed;
     }
     else if(keyboard_check(vk_up) &amp;&amp; !moving &amp;&amp; place_free(x, y - 8)){
       input = instance_create(0,0,obj_movement);
       with(input){
         x = other.x;
-        y = other.y - 8;
+        y = other.y - other.stepSpeed;
         inputID = ++other.inputID;
       }
       ds_list_add(inputs, input);
@@ -182,14 +181,13 @@ if(canMove){
       buffer_write(movePacket, buffer_string, "up");
       buffer_write(movePacket, buffer_string, string(inputID));
       network_write(Network.socket, movePacket);
-      target_y = y - 8;
-      show_debug_message("sent message #" + string(input.inputID) + " with y: " + string(target_y))
+      target_y = y - stepSpeed;
     }
     else if(keyboard_check(vk_down) &amp;&amp; !moving &amp;&amp; !moving &amp;&amp; place_free(x, y + 8)){
       input = instance_create(0,0,obj_movement);
       with(input){
         x = other.x;
-        y = other.y + 8;
+        y = other.y + other.stepSpeed;
         inputID = ++other.inputID;
       }
       ds_list_add(inputs, input);
@@ -201,8 +199,7 @@ if(canMove){
       buffer_write(movePacket, buffer_string, "down");
       buffer_write(movePacket, buffer_string, string(inputID));
       network_write(Network.socket, movePacket);
-      target_y = y + 8;
-      show_debug_message("sent message #" + string(input.inputID) + " with y: " + string(target_y))
+      target_y = y + stepSpeed;
     }
     else if(keyboard_check(vk_left)){
       facing = "left";
