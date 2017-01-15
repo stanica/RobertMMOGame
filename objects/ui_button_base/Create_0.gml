@@ -1,0 +1,3 @@
+text = "";
+hover = false;
+

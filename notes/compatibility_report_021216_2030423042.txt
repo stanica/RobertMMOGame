@@ -1,0 +1,39 @@
+Converting GML script : ${project_dir}\objects\ui_chatbox\Draw_0.gml
+Error : variable "draw_set_color" has same name as a built-in (function, constant or variable), it must be renamed to function correctly
+
+Converting GML script : ${project_dir}\objects\obj_chat_text\Draw_0.gml
+Error : variable "draw_set_color" has same name as a built-in (function, constant or variable), it must be renamed to function correctly
+
+Converting GML script : ${project_dir}\objects\obj_chat_background\Create_0.gml
+Converted builtin : line 1 : view_hview[0] -> __view_get( e__VW.HView, 0 )
+
+Converting GML script : ${project_dir}\objects\obj_chat_background\Draw_0.gml
+Converted builtin : line 1 : view_xview[0] -> __view_get( e__VW.XView, 0 )
+Converted builtin : line 2 : view_yview[0] -> __view_get( e__VW.YView, 0 )
+Converted builtin : line 2 : view_hview[0] -> __view_get( e__VW.HView, 0 )
+
+Converting GML script : ${project_dir}\objects\obj_player\Step_0.gml
+Converted builtin : line 122 : view_xview[0] -> __view_get( e__VW.XView, 0 )
+Converted builtin : line 123 : view_xview[0] -> __view_get( e__VW.XView, 0 )
+Converted builtin : line 122 : view_yview[0] -> __view_get( e__VW.YView, 0 )
+Converted builtin : line 123 : view_yview[0] -> __view_get( e__VW.YView, 0 )
+Converted builtin : line 122 : view_hview[0] -> __view_get( e__VW.HView, 0 )
+Converted builtin : line 123 : view_hview[0] -> __view_get( e__VW.HView, 0 )
+
+Converting GML script : ${project_dir}\objects\obj_player\Draw_0.gml
+Error : variable "draw_set_color" has same name as a built-in (function, constant or variable), it must be renamed to function correctly
+Converted builtin : line 2 : view_xview[0] -> __view_get( e__VW.XView, 0 )
+Converted builtin : line 2 : view_yview[0] -> __view_get( e__VW.YView, 0 )
+
+game speed set to 30
+added compatibility script action/action_end_game.gml
+added compatibility script instance/instance_create.gml
+added compatibility script object/object_get_depth.gml
+added compatibility script tile/tile_get_left.gml
+added compatibility script tile/tile_get_top.gml
+added compatibility script tile/tile_layer_find.gml
+added compatibility script view/__view_get.gml
+added compatibility script action/__init_action.gml
+added compatibility script view/__init_view.gml
+added compatibility script __init_global.gml
+added compatibility script __global_object_depths.gml
