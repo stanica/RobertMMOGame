@@ -1,7 +1,7 @@
 {
     "id": "d837e373-90c4-462f-8883-ec90fda6a31d",
     "modelName": "GMSprite",
-    "mvc": "1.11",
+    "mvc": "1.12",
     "name": "spr_hero_right",
     "For3D": false,
     "HTile": false,
@@ -103,6 +103,8 @@
             ]
         }
     ],
+    "gridX": 0,
+    "gridY": 0,
     "height": 16,
     "layers": [
         {
@@ -117,6 +119,7 @@
             "visible": true
         }
     ],
+    "origin": 4,
     "playbackSpeed": 1,
     "playbackSpeedType": 1,
     "sepmasks": false,

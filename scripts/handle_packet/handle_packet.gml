@@ -26,10 +26,10 @@ switch(command){
       with(instance_create(target_x, target_y, obj_player)){
         name = other.name;
       }
-      //Login has taken place, load other players
-      var loadPlayers = buffer_create(1, buffer_grow, 1);
-      buffer_write(loadPlayers, buffer_string, "loadplayers");
-      network_write(Network.socket, loadPlayers);
+      //Login has taken place, load other players and NPCs
+      var load = buffer_create(1, buffer_grow, 1);
+      buffer_write(load, buffer_string, "load");
+      network_write(Network.socket, load);
     }
     else {
       show_message("Login failed: Invalid username or password.");
@@ -115,7 +115,7 @@ switch(command){
             instance_destroy();
         }
     }
-    break
+    break;
     
   case "CHAT":
     type = buffer_read(argument0, buffer_string);
@@ -153,5 +153,23 @@ switch(command){
           displayed = false;
         }
     }
-    break
+    break;
+	
+	case "NPCS":
+		num = buffer_read(argument0, buffer_u16);
+		for(i=0; i<num; i++){
+			name = buffer_read(argument0, buffer_string);
+			sprite = buffer_read(argument0, buffer_string);
+			x = buffer_read(argument0, buffer_u16);
+			y = buffer_read(argument0, buffer_u16);
+			text = buffer_read(argument0, buffer_string);
+			with(instance_create(0,0,obj_npc)){
+				name = other.name;
+				sprite_index = asset_get_index(other.sprite);
+				x = other.x;
+				y = other.y;
+				text = other.text;
+			}
+		}
+	break;
 }
