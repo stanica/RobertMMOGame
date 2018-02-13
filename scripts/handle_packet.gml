@@ -27,9 +27,9 @@ switch(command){
         name = other.name;
       }
       //Login has taken place, load other players
-      var loadPlayers = buffer_create(1, buffer_grow, 1);
-      buffer_write(loadPlayers, buffer_string, "loadplayers");
-      network_write(Network.socket, loadPlayers);
+      var load = buffer_create(1, buffer_grow, 1);
+      buffer_write(load, buffer_string, "load");
+      network_write(Network.socket, load);
     }
     else {
       show_message("Login failed: Invalid username or password.");
@@ -71,47 +71,27 @@ switch(command){
     break;
     
   case "USER_POS":
-    dir = buffer_read(argument0, buffer_string);
-    value = buffer_read(argument0, buffer_u16);
+    var serverX = buffer_read(argument0, buffer_u16);
+    var serverY = buffer_read(argument0, buffer_u16);
     //Stores the last confirmed input message number by the server
     var networkInput = buffer_read(argument0, buffer_string);
-    var updatedX = 0;
-    var updatedY = 0;
-    switch(dir){
-      case "HORIZ":
-        updatedX = value;
-        break;
-          
-      case "VERT":
-        updatedY = value;
-        break;
-      }
-    //Extract last confirmed coordinates from last confirmed input using last confirmed message number
-    for(var i=0; i<ds_list_size(obj_player.inputs); i++){
-      if(obj_player.inputs[| i].inputID == real(networkInput)){
-        with(obj_player.inputs[| i]){
-          if(updatedX == 0){
-            updatedX = x;
-          }
-          else if(updatedY == 0)
-            updatedY = y;
-        }
-      }
-    }
+
     with(obj_player){
       //If the last confirmed coordinate doesn't match current player's coordinate, update player
-      target_x = updatedX;
-      target_y = updatedY;
+      target_x = serverX;
+      target_y = serverX;
       
       //Destroy input object matching confirmed message number and delete item from inputs array
       for (var i=0; i<ds_list_size(inputs); i++){
-        if (inputs[| i].inputID == real(networkInput)){
+        if (inputs[| i].inputID <= real(networkInput)){
           with(inputs[| i]){
             instance_destroy();
           }
           ds_list_delete(inputs, i);
         }
       }
+      show_debug_message("inputs size is: " + string(ds_list_size(inputs)) + " x is: " + string(x) + " y is: " + string(y));
+      
       
       //Loop through inputs array and apply local coordinates to player
       with(obj_player){
@@ -122,6 +102,7 @@ switch(command){
         }
       }
     }
+    
     break;
   
   case "PONG":
@@ -175,5 +156,23 @@ switch(command){
           displayed = false;
         }
     }
-    break
+    break;
+    
+  case "NPCS":
+    		num = buffer_read(argument0, buffer_u16);
+		  for(i=0; i<num; i++){
+      name = buffer_read(argument0, buffer_string);
+      sprite = buffer_read(argument0, buffer_string);
+			   x = buffer_read(argument0, buffer_u16);
+			   y = buffer_read(argument0, buffer_u16);
+      text = buffer_read(argument0, buffer_string);
+			   with(instance_create(0,0,obj_network_player)){
+        name = other.name;
+				    sprite_index = asset_get_index(other.sprite);
+				    x = other.x;
+				    y = other.y;
+        text = other.text;
+			   }
+		  }
+	   break;
 }

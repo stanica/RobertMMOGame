@@ -22,6 +22,9 @@
       <sprite>sprites\spr_blocked</sprite>
       <sprite>sprites\spr_tree</sprite>
     </sprites>
+    <sprites name="NPCs">
+      <sprite>sprites\sprite10</sprite>
+    </sprites>
   </sprites>
   <backgrounds name="background">
     <background>background\bg_loading</background>
