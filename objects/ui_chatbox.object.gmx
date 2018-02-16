@@ -3,7 +3,7 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>-100</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -27,9 +27,10 @@
             <kind>1</kind>
             <string>width = 16*4;
 height = 16*3;
-padding = 4;
-max_word_length = floor((width - (padding * 2))  / string_width("z"));
-max_displayed_lines = ceil(height / string_height("z"));
+paddingTop = 2;
+paddingLeft = 4;
+max_word_length = floor((width - (paddingLeft * 2))  / string_width("z"));
+max_displayed_lines = floor(height / string_height("z"));
 //List of line ends
 start = ds_list_create();
 ds_list_add(start, 0);
@@ -58,7 +59,7 @@ with (instance_create(x+width-8, y+height-8, obj_chat_down)){
   other.down = id;
   chatID = other.id;
 }
-alarm[0] = 30*5
+//alarm[0] = room_speed * 5;
 
 playerID = -1;
 </string>
@@ -115,7 +116,7 @@ with(down){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//instance_destroy();
+            <string>instance_destroy();
 </string>
           </argument>
         </arguments>
@@ -141,7 +142,7 @@ with(down){
             <string>if (!displayed){
   for (i=0; i&lt;= string_length(message); i++){
     //If past width of chat box, insert line break.
-    if(string_width(str) &gt; width - (padding*2)){
+    if(string_width(str) &gt; width - (paddingLeft*2)){
       //Remove space and replace with line break
       message = string_delete(message, last_space, 1);
       message = string_insert("#", message, last_space);
@@ -272,13 +273,13 @@ with(down){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_alpha(0.5);
+            <string>draw_set_alpha(0.75);
 draw_roundrect_colour(x, y, x+width, y+height, c_black, c_black, false);
 draw_set_alpha(1);
 draw_set_color(c_white);
 draw_set_font(chatBox);
-draw_text(x+padding, y+padding, str);
-draw_set_font(font0);
+draw_text(x+paddingLeft, y+paddingTop, str);
+draw_set_font(chatBox);
 </string>
           </argument>
         </arguments>

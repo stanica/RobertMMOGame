@@ -10,7 +10,8 @@
   <persistent>0</persistent>
   <colour>12632256</colour>
   <showcolour>-1</showcolour>
-  <code>var file;
+  <code>/*
+var file;
 file = file_text_open_append("map.txt");
 
 for (var r=0; r&lt;768; r+=8){
@@ -27,7 +28,7 @@ for (var r=0; r&lt;768; r+=8){
 with(obj_blocked){
   file_text_write_string(file, "vals[" + string(y/8) + "][" + string(x/8)+"]=1;");
 }
-file_text_close(file);</code>
+file_text_close(file);*/</code>
   <enableViews>-1</enableViews>
   <clearViewBackground>-1</clearViewBackground>
   <clearDisplayBuffer>-1</clearDisplayBuffer>

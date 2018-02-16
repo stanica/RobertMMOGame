@@ -32,7 +32,7 @@ target_y = y;
 facing = "down";
 sprite_index = spr_hero_down;
 image_speed = 0.1;
-draw_set_font(font0);
+draw_set_font(chatBox);
 date_set_timezone(timezone_utc);
 alarm[0] = 1;
 timeOffset = 0;

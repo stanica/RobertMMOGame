@@ -23,7 +23,10 @@
       <sprite>sprites\spr_tree</sprite>
     </sprites>
     <sprites name="NPCs">
-      <sprite>sprites\sprite10</sprite>
+      <sprite>sprites\spr_npc1_up</sprite>
+      <sprite>sprites\spr_npc1_down</sprite>
+      <sprite>sprites\spr_npc1_left</sprite>
+      <sprite>sprites\spr_npc1_right</sprite>
     </sprites>
   </sprites>
   <backgrounds name="background">
@@ -38,7 +41,6 @@
     <script>scripts\network_write.gml</script>
   </scripts>
   <fonts name="fonts">
-    <font>fonts\font0</font>
     <font>fonts\chatBox</font>
   </fonts>
   <objects name="objects">
@@ -73,6 +75,9 @@
     </objects>
     <objects name="Data">
       <object>objects\obj_movement</object>
+    </objects>
+    <objects name="NPCs">
+      <object>objects\obj_npc1</object>
     </objects>
   </objects>
   <rooms name="rooms">

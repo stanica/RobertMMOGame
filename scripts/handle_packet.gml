@@ -75,11 +75,11 @@ switch(command){
     var serverY = buffer_read(argument0, buffer_u16);
     //Stores the last confirmed input message number by the server
     var networkInput = buffer_read(argument0, buffer_string);
-
+    
     with(obj_player){
       //If the last confirmed coordinate doesn't match current player's coordinate, update player
       target_x = serverX;
-      target_y = serverX;
+      target_y = serverY;
       
       //Destroy input object matching confirmed message number and delete item from inputs array
       for (var i=0; i<ds_list_size(inputs); i++){
@@ -92,7 +92,7 @@ switch(command){
       }
       show_debug_message("inputs size is: " + string(ds_list_size(inputs)) + " x is: " + string(x) + " y is: " + string(y));
       
-      
+      /*
       //Loop through inputs array and apply local coordinates to player
       with(obj_player){
       show_debug_message("inputs size is: " + string(ds_list_size(inputs)) + " x is: " + string(x) + " y is: " + string(y));
@@ -100,7 +100,7 @@ switch(command){
           target_x = inputs[| i].x;
           target_y = inputs[| i].y;
         }
-      }
+      }*/
     }
     
     break;
@@ -159,20 +159,20 @@ switch(command){
     break;
     
   case "NPCS":
-    		num = buffer_read(argument0, buffer_u16);
-		  for(i=0; i<num; i++){
+    num = buffer_read(argument0, buffer_u16);
+    for(i=0; i<num; i++){
       name = buffer_read(argument0, buffer_string);
       sprite = buffer_read(argument0, buffer_string);
-			   x = buffer_read(argument0, buffer_u16);
-			   y = buffer_read(argument0, buffer_u16);
+      x = buffer_read(argument0, buffer_u16);
+      y = buffer_read(argument0, buffer_u16);
       text = buffer_read(argument0, buffer_string);
-			   with(instance_create(0,0,obj_network_player)){
+      with(instance_create(0,0,obj_npc1)){
         name = other.name;
-				    sprite_index = asset_get_index(other.sprite);
-				    x = other.x;
-				    y = other.y;
+        sprite_index = asset_get_index(other.sprite);
+        x = other.x;
+        y = other.y;
         text = other.text;
-			   }
-		  }
-	   break;
+      }
+    }
+    break;
 }
